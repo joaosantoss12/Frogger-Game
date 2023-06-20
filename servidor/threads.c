@@ -6,7 +6,7 @@ BOOL WINAPI criaNamedPipeParaClientesTabuleiroJogo(LPVOID p) {
 
 	PartilhaJogoServidorCliente* partilhaJogo = (PartilhaJogoServidorCliente*)p;
 
-	_tprintf(TEXT("¡ espera da conex„o de um jogador...\n"));
+	_tprintf(TEXT("√Å espera da conex√£o de um jogador...\n"));
 
 	for (int i = 0; i < MAX_PLAYERS; ++i) {
 
@@ -149,10 +149,10 @@ BOOL WINAPI updateMapGameToOperador(LPVOID p) {
 	SharedGame* sharedGame = (SharedGame*)p;
 
 	while (TRUE) {
-		WaitForSingleObject(sharedGame->hSemaforoSendGameUpdate, INFINITE);//espera pelo semaforo//atulizaÁ„o do mapa de jogo esta disponivel
+		WaitForSingleObject(sharedGame->hSemaforoSendGameUpdate, INFINITE);//espera pelo semaforo//atuliza√ß√£o do mapa de jogo esta disponivel
 
 		SetEvent(sharedGame->hEventUpdateGame);//notificar outras thread que o mapa foi atualizado
-		//Sleep(500);	//dar tempo ‡s threads 
+		//Sleep(500);	//dar tempo √†s threads 
 		ResetEvent(sharedGame->hEventUpdateGame);
 	}
 	return TRUE;
@@ -172,7 +172,7 @@ BOOL WINAPI inGameClock(LPVOID p) {
 		//for (DWORD i = 0; i < MAX_PLAYERS; i++) {
 
 			if (!sharedGame->gameData[0]->inGame || sharedGame->gameData[0]->pausedGame)		// NAO PRECISAMOS SABER POIS VAI ESTAR SEM O EVENTO EventInGame
-				continue;																		// MAS DEIXA PARA N√O DAR MAIS TRABALHO CASO D  ASNEIRA
+				continue;																		// MAS DEIXA PARA N√ÉO DAR MAIS TRABALHO CASO D√ä ASNEIRA
 
 			if (sharedGame->gameData[0]->won) 
 				nextLevel(sharedGame->gameData[0]);
@@ -185,13 +185,13 @@ BOOL WINAPI inGameClock(LPVOID p) {
 				sharedGame->gameData[0]->won = TRUE;
 
 
-			if (sharedGame->gameData[0]->carrosStop > 0) {			// VERIFICAR SE A VARI¡VEL DE PARAR OS CARROS EM SEGUNDOS … > 0
+			if (sharedGame->gameData[0]->carrosStop > 0) {			// VERIFICAR SE A VARI√ÅVEL DE PARAR OS CARROS EM SEGUNDOS √â > 0
 				--sharedGame->gameData[0]->carrosStop;
 			}
 			else {
 				if(sharedGame->gameData[0]->level < 5)
 					moveCars(sharedGame);
-				else if (sharedGame->gameData[0]->level > 5) {
+				else if (sharedGame->gameData[0]->level >= 5) {
 					moveCars(sharedGame);
 					moveCars(sharedGame);
 				}
@@ -255,7 +255,7 @@ BOOL WINAPI receiveCommandFromOperador(LPVOID p) {
 		WaitForSingleObject(sharedGame->hSemaforoReadBufferCircular_OperadorServidor, INFINITE);
 		WaitForSingleObject(sharedGame->hMutexBufferCircular_OperadorServidor, INFINITE);
 
-		WaitForSingleObject(sharedGame->hReadWriteMutexUpdateGame, INFINITE);//esperar que o jogo n„o esteja a ser atualizado //servidor atualizar e operador mostrar o jogo atualizado
+		WaitForSingleObject(sharedGame->hReadWriteMutexUpdateGame, INFINITE);//esperar que o jogo n√£o esteja a ser atualizado //servidor atualizar e operador mostrar o jogo atualizado
 
 		checkCommandFromOperador(sharedGame, sharedGame->bufferCircular_OperadorServidor->buffer[sharedGame->bufferCircular_OperadorServidor->rP].message);
 
@@ -267,7 +267,7 @@ BOOL WINAPI receiveCommandFromOperador(LPVOID p) {
 			sharedGame->bufferCircular_OperadorServidor->rP = 0;
 
 		ReleaseMutex(sharedGame->hMutexBufferCircular_OperadorServidor);
-		ReleaseSemaphore(sharedGame->hSemaforoWriteBufferCircular_OperadorServidor, 1, NULL);//liberta um espal+Áo no semaoforo para a escrita
+		ReleaseSemaphore(sharedGame->hSemaforoWriteBufferCircular_OperadorServidor, 1, NULL);//liberta um espal+√ßo no semaoforo para a escrita
 
 	}
 	return TRUE;
@@ -297,7 +297,7 @@ BOOL WINAPI executeCommandsServidor(LPVOID p) {
 			//for (DWORD i = 0; i < MAX_PLAYERS; i++) {   SINGLEPLAYER OU MULTIPLAYER
 
 				//if (!sharedGame->gameData[0]->inGame) {
-					//startGame(sharedGame->gameData[0], sharedGame->gameSettings);//inicializaÁ„o
+					//startGame(sharedGame->gameData[0], sharedGame->gameSettings);//inicializa√ß√£o
 
 					//if (i == 0) {
 						//SetEvent(sharedGame->hEventInGame);
