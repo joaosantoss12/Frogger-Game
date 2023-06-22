@@ -149,7 +149,7 @@ BOOL WINAPI updateMapGameToOperador(LPVOID p) {
 	SharedGame* sharedGame = (SharedGame*)p;
 
 	while (TRUE) {
-		WaitForSingleObject(sharedGame->hSemaforoSendGameUpdate, INFINITE);//espera pelo semaforo//atulização do mapa de jogo esta disponivel
+		WaitForSingleObject(sharedGame->hSemaforoSendGameUpdate, INFINITE);//espera pelo semaforo //atulização do mapa de jogo esta disponivel
 
 		SetEvent(sharedGame->hEventUpdateGame);//notificar outras thread que o mapa foi atualizado
 		//Sleep(500);	//dar tempo às threads 
@@ -267,7 +267,7 @@ BOOL WINAPI receiveCommandFromOperador(LPVOID p) {
 			sharedGame->bufferCircular_OperadorServidor->rP = 0;
 
 		ReleaseMutex(sharedGame->hMutexBufferCircular_OperadorServidor);
-		ReleaseSemaphore(sharedGame->hSemaforoWriteBufferCircular_OperadorServidor, 1, NULL);//liberta um espal+ço no semaoforo para a escrita
+		ReleaseSemaphore(sharedGame->hSemaforoWriteBufferCircular_OperadorServidor, 1, NULL);//liberta um espaço no semaforo para a escrita
 
 	}
 	return TRUE;

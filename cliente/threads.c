@@ -21,7 +21,7 @@ HANDLE hPipe = INVALID_HANDLE_VALUE; // Global or static variable
 
 void connectToPipe() {
     if (hPipe != INVALID_HANDLE_VALUE) {
-        return; 
+        return; // PIPE JA ESTA CONECTADO
     }
 
     if (!WaitNamedPipe(PIPE_NAME_MESSAGES, NMPWAIT_WAIT_FOREVER)) {
@@ -41,6 +41,7 @@ void connectToPipe() {
         exit(-1);
     }
 
+    // ?
     DWORD dwMode = PIPE_READMODE_MESSAGE;
     if (!SetNamedPipeHandleState(hPipe, &dwMode, NULL, NULL)) {
         _tprintf(TEXT("[ERRO] Impossivel definir modo do pipe!"));
