@@ -129,7 +129,7 @@ void startGame(GameData* gameData, GameSettings gameSettings) {
 	gameData->nLines = gameSettings.nLines;
 	gameData->nColumns = gameSettings.nColumns;
 
-	gameData->secondsInGame = 55;
+	gameData->secondsInGame = 5;
 
 	gameData->inactiveSeconds = 0;
 	gameData->points = 0;

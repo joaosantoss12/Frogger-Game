@@ -58,6 +58,9 @@ BOOL WINAPI criaNamedPipeParaClientesTabuleiroJogo(LPVOID p) {
 				WaitForSingleObject(partilhaJogo->hReadWriteMutexUpdateGame, INFINITE);
 				partilhaJogo->hPipes[i].active = TRUE;
 				ReleaseMutex(partilhaJogo->hReadWriteMutexUpdateGame);
+
+				_tprintf(TEXT("Jogador conectado!\n"));
+
 			}
 			numClientes++;
 		}
@@ -74,8 +77,6 @@ DWORD WINAPI clienteConectaNamedPipeTabuleiro(LPVOID p) {
 	DWORD n;
 	BOOL ret;
 
-	BOOL connected = FALSE;
-
 	do {
 
 		WaitForSingleObject(dados->hEventUpdateGame, INFINITE);
@@ -87,12 +88,6 @@ DWORD WINAPI clienteConectaNamedPipeTabuleiro(LPVOID p) {
 				if (!WriteFile(dados->hPipes[0].hInstancia, dados->gameData[0], sizeof(GameData), &n, NULL)) {	
 					_tprintf(TEXT("Cliente desconectou!\n"));
 					dados->gameData[0]->inGame = FALSE;
-				}
-				else {
-					if (!connected) {
-						_tprintf(TEXT("Jogador conectado!\n"));
-						connected = TRUE;
-					}
 				}
 			}
 			ReleaseMutex(dados->hReadWriteMutexUpdateGame);
